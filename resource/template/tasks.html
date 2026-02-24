@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Todo Application</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f9;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 600px;
+            margin: 50px auto;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        /* Form Styling */
+        .task-form {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .task-form input {
+            flex: 1;
+            padding: 10px;
+            font-size: 16px;
+        }
+
+        .task-form button {
+            padding: 10px 15px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        /* Card Styling */
+        .card {
+            background: white;
+            padding: 12px 15px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-radius: 6px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .text-strikethrough {
+            text-decoration: line-through;
+            color: gray;
+        }
+
+        .btn {
+           background-color:blue;
+            padding: 5px 10px;
+            border: none;
+            cursor: pointer;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        .btn-toggle {
+            background-color: #6c757d;
+            color: white;
+        }
+
+        .btn-delete {
+            background-color: #dc3545;
+            color: white;
+            margin-left: 5px;
+        }
+
+        .btn:hover {
+            opacity: 0.8;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <h1>Todo Application</h1>
+
+    <!-- Add Task Form -->
+    <form action="/" method="post" class="task-form">
+        <input type="text" name="title" placeholder="Add a new task..." required>
+        <button type="submit" class="btn">Add</button>
+    </form>
+
+    <div th:each="task : ${tasks}" class="card">
+        <span th:text="${task.title}" th:classappend="${task.completed} ? ' text-strikethrough' : ''">Task Title</span>
+        <div>
+            <a th:href="@{/{id}/toggle(id=${task.id})}">
+                <button class="btn btn-toggle"
+                        th:text="${task.completed} ? 'Undo' : 'Complete'">
+                </button>
+            </a>
+
+            <a th:href="@{/{id}/delete(id=${task.id})}">
+                <button class="btn btn-delete">Delete</button>
+            </a>
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>
